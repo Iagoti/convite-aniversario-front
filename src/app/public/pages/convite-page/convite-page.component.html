@@ -5,8 +5,12 @@
         #conviteVideo
         [src]="evento().videoUrl"
         [class.is-playing]="videoAtivo()"
-        [controls]="videoAtivo()"
+        controls
+        autoplay
+        muted
         playsinline
+        (play)="videoAtivo.set(true)"
+        (pause)="videoAtivo.set(false)"
         (ended)="videoAtivo.set(false)">
       </video>
 
