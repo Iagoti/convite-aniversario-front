@@ -1,0 +1,47 @@
+<main class="page">
+  <div class="artwork">
+    <section class="video-area" aria-label="Vídeo do convite">
+      <video
+        #conviteVideo
+        [src]="evento().videoUrl"
+        [class.is-playing]="videoAtivo()"
+        [controls]="videoAtivo()"
+        playsinline
+        (ended)="videoAtivo.set(false)">
+      </video>
+
+      <button
+        *ngIf="!videoAtivo()"
+        class="play-button"
+        type="button"
+        aria-label="Assistir ao vídeo"
+        (click)="iniciarVideo(conviteVideo)">
+        <span>▶</span>
+      </button>
+    </section>
+
+    <button class="music-hotspot" type="button" aria-label="Ativar ou desativar som" (click)="alternarSom(conviteVideo)"></button>
+    <a class="scroll-hotspot" href="#convite" aria-label="Ver detalhes do convite"></a>
+
+    <section id="convite" class="interactive-area" aria-label="Detalhes do convite">
+      <button class="hotspot confirm-small" type="button" aria-label="Confirmar presença" (click)="modalAberto.set(true)"></button>
+      <button class="hotspot location-small" type="button" aria-label="Ver localização da festa" (click)="abrirMapa()"></button>
+      <button class="hotspot gift-small" type="button" aria-label="Ver sugestões de presente"></button>
+      <button class="hotspot confirm-large" type="button" aria-label="Confirmar presença" (click)="modalAberto.set(true)"></button>
+      <button class="hotspot location-large" type="button" aria-label="Ver localização da festa" (click)="abrirMapa()"></button>
+    </section>
+  </div>
+
+  <div class="modal-bg" *ngIf="modalAberto()" (click)="modalAberto.set(false)">
+    <form class="modal" (ngSubmit)="confirmar()" (click)="$event.stopPropagation()">
+      <button class="close" type="button" aria-label="Fechar" (click)="modalAberto.set(false)">×</button>
+      <h2 class="script">Confirmar Presença</h2>
+      <p *ngIf="enviado()" class="ok">Presença confirmada com sucesso!</p>
+      <div class="field"><label>Nome completo</label><input name="nome" [(ngModel)]="form.nome" required></div>
+      <div class="field"><label>Telefone / WhatsApp</label><input name="telefone" [(ngModel)]="form.telefone" required></div>
+      <div class="field"><label>Quantidade de pessoas</label><input name="qtd" type="number" min="1" [(ngModel)]="form.quantidadePessoas"></div>
+      <div class="field"><label>Observação</label><textarea name="obs" [(ngModel)]="form.observacao"></textarea></div>
+      <button class="submit" type="submit">Confirmar Presença</button>
+    </form>
+  </div>
+</main>
