@@ -4,6 +4,8 @@ Projeto Angular para o convite online do aniversário da Isabella.
 
 ## Rodar o projeto
 
+Inicie primeiro o PostgreSQL e a API conforme o README de `convite-aniversario-back`.
+
 ```bash
 npm install
 npm start
@@ -24,19 +26,17 @@ Login administrativo de teste:
 - One page pública com vídeo inicial.
 - Exibição das informações do convite após o vídeo.
 - Modal para confirmar presença com nome, telefone e quantidade de pessoas.
-- Armazenamento temporário em `localStorage`.
+- Persistência no PostgreSQL por meio da API Java.
 - Painel administrativo.
 - Dashboard com total de confirmações e pessoas confirmadas.
 - Tela para listar, buscar, cancelar, excluir e exportar confirmações em CSV.
 - Tela para editar dados do evento.
-- Script SQL em `database/schema.sql` para futura integração com backend.
-
-## Próximo passo
-
-Substituir o `localStorage` por uma API Spring Boot usando os endpoints:
-
-- `GET /api/evento`
-- `PUT /api/evento/{id}`
+- Autenticação administrativa com JWT.
+- `GET /api/eventos/atual`
+- `PUT /api/eventos/atual`
 - `POST /api/confirmacoes`
 - `GET /api/confirmacoes`
+- `PATCH /api/confirmacoes/{id}/cancelamento`
 - `DELETE /api/confirmacoes/{id}`
+
+A URL da API para cada ambiente fica em `src/environments/environment.ts`.

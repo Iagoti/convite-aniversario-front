@@ -66,18 +66,22 @@ export class ConvitePageComponent {
 
   confirmar() {
     if (!this.form.nome.trim() || !this.form.telefone.trim()) return;
-    this.confirmacaoService.confirmar({ ...this.form });
-    this.enviado.set(true);
-    setTimeout(() => {
-      this.modalAberto.set(false);
-      this.enviado.set(false);
-      this.form = {
-        nome: '',
-        telefone: '',
-        quantidadePessoas: 1,
-        observacao: '',
-      };
-    }, 1200);
+    this.confirmacaoService.confirmar({ ...this.form }).subscribe({
+      next: () => {
+        this.enviado.set(true);
+        setTimeout(() => {
+          this.modalAberto.set(false);
+          this.enviado.set(false);
+          this.form = {
+            nome: '',
+            telefone: '',
+            quantidadePessoas: 1,
+            observacao: '',
+          };
+        }, 1200);
+      },
+      error: error => console.error('Não foi possível confirmar a presença', error),
+    });
   }
 
   abrirMapa() {

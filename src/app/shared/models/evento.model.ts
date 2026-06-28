@@ -9,5 +9,6 @@ export interface Evento {
   endereco: string;
   linkMaps: string;
   videoUrl: string;
+  sugestoes?: SugestaoPresente[];
 }
 export interface SugestaoPresente { id: number; titulo: string; descricao: string; icone: string; }
