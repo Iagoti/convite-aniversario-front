@@ -14,6 +14,7 @@ import { ConfirmacaoService } from '../../../core/services/confirmacao.service';
 export class ConvitePageComponent {
   evento = this.eventoService.evento;
   sugestoes = this.eventoService.sugestoes;
+  entradaPendente = signal(true);
   videoAtivo = signal(false);
   videoMudo = signal(true);
   modalAberto = signal(false);
@@ -25,15 +26,42 @@ export class ConvitePageComponent {
     private confirmacaoService: ConfirmacaoService,
   ) {}
 
-  iniciarVideo(video: HTMLVideoElement) {
-    this.videoAtivo.set(true);
-    video.play();
+  async liberarEntrada(video: HTMLVideoElement) {
+    this.entradaPendente.set(false);
+    video.muted = false;
+    this.videoMudo.set(false);
+    video.currentTime = 0;
+
+    try {
+      await video.play();
+      this.videoAtivo.set(true);
+    } catch {
+      video.muted = true;
+      this.videoMudo.set(true);
+      await video.play();
+      this.videoAtivo.set(true);
+    }
+  }
+
+  async iniciarVideo(video: HTMLVideoElement) {
+    video.muted = false;
+    this.videoMudo.set(false);
+
+    try {
+      await video.play();
+      this.videoAtivo.set(true);
+    } catch {
+      video.muted = true;
+      this.videoMudo.set(true);
+      await video.play();
+      this.videoAtivo.set(true);
+    }
   }
 
   alternarSom(video: HTMLVideoElement) {
     video.muted = !video.muted;
     this.videoMudo.set(video.muted);
-    if (video.paused) this.iniciarVideo(video);
+    if (video.paused) void this.iniciarVideo(video);
   }
 
   confirmar() {
