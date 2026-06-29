@@ -4,7 +4,6 @@ export interface ConfirmacaoPresenca {
   nome: string;
   telefone: string;
   quantidadePessoas: number;
-  observacao?: string;
   status: StatusConfirmacao;
   criadoEm: string;
 }

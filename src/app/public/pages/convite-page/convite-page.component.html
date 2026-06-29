@@ -179,27 +179,59 @@
   </article>
 
   <div class="modal-bg" *ngIf="modalAberto()" (click)="modalAberto.set(false)">
-    <form class="modal" (ngSubmit)="confirmar()" (click)="$event.stopPropagation()">
+    <form
+      #confirmacaoForm="ngForm"
+      class="modal"
+      (ngSubmit)="confirmar(confirmacaoForm)"
+      (click)="$event.stopPropagation()"
+      novalidate>
       <button class="close" type="button" aria-label="Fechar" (click)="modalAberto.set(false)">×</button>
       <h2 class="script">Confirmar Presença</h2>
       <p *ngIf="enviado()" class="ok">Presença confirmada com sucesso!</p>
+      <p *ngIf="erroFormulario()" class="erro">{{ erroFormulario() }}</p>
       <div class="field">
-        <label for="nome">Nome completo</label>
-        <input id="nome" name="nome" [(ngModel)]="form.nome" required>
+        <label for="nome">Nome completo *</label>
+        <input
+          id="nome"
+          name="nome"
+          [(ngModel)]="form.nome"
+          required
+          minlength="3"
+          maxlength="150"
+          #nome="ngModel">
+        <small class="field-erro" *ngIf="nome.invalid && nome.touched">Informe o nome completo.</small>
       </div>
       <div class="field">
-        <label for="telefone">Telefone / WhatsApp</label>
-        <input id="telefone" name="telefone" [(ngModel)]="form.telefone" required>
+        <label for="telefone">Telefone / WhatsApp *</label>
+        <input
+          id="telefone"
+          name="telefone"
+          type="tel"
+          inputmode="numeric"
+          autocomplete="tel"
+          placeholder="(00) 00000-0000"
+          maxlength="15"
+          [(ngModel)]="form.telefone"
+          required
+          [pattern]="telefonePattern"
+          (input)="aplicarMascaraTelefone($event)"
+          #telefone="ngModel">
+        <small class="field-erro" *ngIf="telefone.invalid && telefone.touched">Informe um telefone válido.</small>
       </div>
       <div class="field">
-        <label for="qtd">Quantidade de pessoas</label>
-        <input id="qtd" name="qtd" type="number" min="1" [(ngModel)]="form.quantidadePessoas">
+        <label for="qtd">Quantidade de pessoas *</label>
+        <input
+          id="qtd"
+          name="qtd"
+          type="number"
+          min="1"
+          max="20"
+          required
+          [(ngModel)]="form.quantidadePessoas"
+          #qtd="ngModel">
+        <small class="field-erro" *ngIf="qtd.invalid && qtd.touched">Informe de 1 a 20 pessoas.</small>
       </div>
-      <div class="field">
-        <label for="obs">Observação</label>
-        <textarea id="obs" name="obs" [(ngModel)]="form.observacao"></textarea>
-      </div>
-      <button class="submit" type="submit">Confirmar Presença</button>
+      <button class="submit" type="submit" [disabled]="confirmacaoForm.invalid">Confirmar Presença</button>
     </form>
   </div>
 </main>

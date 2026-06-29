@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { NgIf, NgFor } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { EventoService } from '../../../core/services/evento.service';
 import { ConfirmacaoService } from '../../../core/services/confirmacao.service';
 
@@ -19,7 +19,9 @@ export class ConvitePageComponent {
   videoMudo = signal(true);
   modalAberto = signal(false);
   enviado = signal(false);
-  form = { nome: '', telefone: '', quantidadePessoas: 1, observacao: '' };
+  erroFormulario = signal('');
+  readonly telefonePattern = '^\\(\\d{2}\\) \\d{4,5}-\\d{4}$';
+  form = { nome: '', telefone: '', quantidadePessoas: null as number | null };
 
   constructor(
     private eventoService: EventoService,
@@ -64,23 +66,52 @@ export class ConvitePageComponent {
     if (video.paused) void this.iniciarVideo(video);
   }
 
-  confirmar() {
-    if (!this.form.nome.trim() || !this.form.telefone.trim()) return;
-    this.confirmacaoService.confirmar({ ...this.form }).subscribe({
+  aplicarMascaraTelefone(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const numeros = input.value.replace(/\D/g, '').slice(0, 11);
+    let formatado = '';
+
+    if (numeros.length > 0) formatado = `(${numeros.slice(0, 2)}`;
+    if (numeros.length >= 3) formatado = `(${numeros.slice(0, 2)}) ${numeros.slice(2)}`;
+    if (numeros.length > 6) {
+      formatado = numeros.length > 10
+        ? `(${numeros.slice(0, 2)}) ${numeros.slice(2, 7)}-${numeros.slice(7)}`
+        : `(${numeros.slice(0, 2)}) ${numeros.slice(2, 6)}-${numeros.slice(6)}`;
+    }
+
+    input.value = formatado;
+    this.form.telefone = formatado;
+  }
+
+  confirmar(form: NgForm) {
+    if (form.invalid || this.form.quantidadePessoas == null) {
+      form.control.markAllAsTouched();
+      this.erroFormulario.set('Preencha todos os campos obrigatórios.');
+      return;
+    }
+
+    this.erroFormulario.set('');
+    this.confirmacaoService.confirmar({
+      nome: this.form.nome.trim(),
+      telefone: this.form.telefone.trim(),
+      quantidadePessoas: this.form.quantidadePessoas,
+    }).subscribe({
       next: () => {
         this.enviado.set(true);
         setTimeout(() => {
           this.modalAberto.set(false);
           this.enviado.set(false);
+          form.resetForm();
           this.form = {
             nome: '',
             telefone: '',
-            quantidadePessoas: 1,
-            observacao: '',
+            quantidadePessoas: null,
           };
         }, 1200);
       },
-      error: error => console.error('Não foi possível confirmar a presença', error),
+      error: () => this.erroFormulario.set(
+        'Não foi possível salvar. Verifique se o backend está rodando e se o celular está na mesma rede Wi‑Fi do computador.',
+      ),
     });
   }
 

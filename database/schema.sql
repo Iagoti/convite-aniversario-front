@@ -18,7 +18,6 @@ CREATE TABLE confirmacao_presenca (
     nome VARCHAR(150) NOT NULL,
     telefone VARCHAR(20) NOT NULL,
     quantidade_pessoas INTEGER DEFAULT 1,
-    observacao TEXT,
     status VARCHAR(30) DEFAULT 'CONFIRMADO',
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
