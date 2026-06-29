@@ -1,1 +1,41 @@
-<h1>Dashboard</h1><section class="stats"><div class="card stat"><span>👥</span><p>Total de confirmações</p><strong>{{resumo().totalConfirmacoes}}</strong></div><div class="card stat"><span>✅</span><p>Pessoas confirmadas</p><strong>{{resumo().totalPessoas}}</strong></div><div class="card stat"><span>❌</span><p>Cancelados</p><strong>{{resumo().cancelados}}</strong></div></section><section class="grid"><article class="card panel"><h2>Confirmações recentes</h2><table><thead><tr><th>Nome</th><th>Telefone</th><th>Pessoas</th><th>Status</th></tr></thead><tbody><tr *ngFor="let c of lista().slice(0,5)"><td>{{c.nome}}</td><td>{{c.telefone}}</td><td>{{c.quantidadePessoas}}</td><td><span class="badge" [class.badge-ok]="c.status==='CONFIRMADO'" [class.badge-danger]="c.status==='CANCELADO'">{{c.status}}</span></td></tr></tbody></table></article><article class="card panel center"><h2>Resumo</h2><div class="donut"><strong>{{resumo().totalPessoas}}</strong><span>pessoas</span></div><p>Total considerando a quantidade informada em cada confirmação.</p></article></section>
+<h1>Dashboard</h1>
+<section class="stats">
+    <div class="card stat"><span>👥</span>
+        <p>Total de confirmações</p><strong>{{resumo().totalConfirmacoes}}</strong>
+    </div>
+    <div class="card stat"><span>✅</span>
+        <p>Pessoas confirmadas</p><strong>{{resumo().totalPessoas}}</strong>
+    </div>
+    <div class="card stat"><span>❌</span>
+        <p>Cancelados</p><strong>{{resumo().cancelados}}</strong>
+    </div>
+</section>
+<section class="grid">
+    <article class="card panel">
+        <h2>Confirmações recentes</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>Pessoas</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let c of lista().slice(0,5)">
+                    <td>{{c.nome}}</td>
+                    <td>{{c.telefone}}</td>
+                    <td>{{c.quantidadePessoas}}</td>
+                    <td><span class="badge" [class.badge-ok]="c.status==='CONFIRMADO'"
+                            [class.badge-danger]="c.status==='CANCELADO'">{{c.status}}</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </article>
+    <article class="card panel center">
+        <h2>Resumo</h2>
+        <div class="donut"><strong>{{resumo().totalPessoas}}</strong><span>pessoas</span></div>
+        <p>Total considerando a quantidade informada em cada confirmação.</p>
+    </article>
+</section>
