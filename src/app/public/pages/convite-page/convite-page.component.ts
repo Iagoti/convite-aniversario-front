@@ -110,7 +110,7 @@ export class ConvitePageComponent {
         }, 1200);
       },
       error: () => this.erroFormulario.set(
-        'Não foi possível salvar. Verifique se o backend está rodando e se o celular está na mesma rede Wi‑Fi do computador.',
+        'Não foi possível salvar. Tente novamente em instantes.',
       ),
     });
   }

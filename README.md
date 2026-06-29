@@ -39,4 +39,6 @@ Login administrativo de teste:
 - `PATCH /api/confirmacoes/{id}/cancelamento`
 - `DELETE /api/confirmacoes/{id}`
 
-A URL da API para cada ambiente fica em `src/environments/environment.ts`.
+A URL da API está em `src/environments/environment.ts`:
+
+- Produção: `https://convite-aniversario-back.onrender.com/api`
