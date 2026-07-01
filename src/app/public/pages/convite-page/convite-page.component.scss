@@ -17,12 +17,21 @@
 .convite {
   min-height: 100vh;
   padding: 0 0 2rem;
+
+  &--bloqueado {
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+  }
 }
 
 .entrada-overlay {
   position: fixed;
   z-index: 30;
   inset: 0;
+  width: 100vw;
+  min-height: 100vh;
+  height: 100dvh;
   display: grid;
   place-items: center;
   padding: 1.5rem;
@@ -31,7 +40,7 @@
     url('/assets/images/hero-isabella.png') center/cover no-repeat;
   cursor: pointer;
   animation: entrada-fade-in 0.5s ease;
-  margin-bottom: 2rem;
+  overflow: hidden;
 }
 
 .entrada-content {

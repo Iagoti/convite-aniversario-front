@@ -21,7 +21,7 @@ export class EventoService {
     mensagem: 'Espero você para comemorar comigo esse dia tão especial!',
     localFesta: 'Salão de Festas Encanto',
     endereco: 'Rua das Flores, 123 - Centro',
-    linkMaps: 'https://maps.app.goo.gl/HkSEvZLeTbSQt5nX7',
+    linkMaps: '',
     videoUrl: 'assets/videos/convite-isabella.mp4',
   };
 

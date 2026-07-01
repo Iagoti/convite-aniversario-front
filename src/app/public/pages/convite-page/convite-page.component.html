@@ -1,4 +1,4 @@
-<main class="convite">
+<main class="convite" [class.convite--bloqueado]="entradaPendente()">
   <div
     class="entrada-overlay"
     *ngIf="entradaPendente()"
