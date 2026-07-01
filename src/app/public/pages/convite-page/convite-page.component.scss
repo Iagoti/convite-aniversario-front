@@ -31,6 +31,7 @@
     url('/assets/images/hero-isabella.png') center/cover no-repeat;
   cursor: pointer;
   animation: entrada-fade-in 0.5s ease;
+  margin-bottom: 2rem;
 }
 
 .entrada-content {
@@ -108,7 +109,7 @@
 .hero {
   position: relative;
   background: #f1e5df url('/assets/images/hero-isabella.png') center/cover no-repeat;
-  padding-bottom: 2.5rem;
+  padding: 1.5rem 0 2.5rem;
   border-radius: 0 0 50% 50% / 0 0 6% 6%;
   overflow: hidden;
 
@@ -440,6 +441,7 @@
 .mensagem {
   text-align: center;
   padding: 0 1rem;
+  margin-top: 2rem;
   margin-bottom: 1.5rem;
 }
 

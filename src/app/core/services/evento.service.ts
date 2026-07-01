@@ -7,6 +7,11 @@ import { Evento, SugestaoPresente } from '../../shared/models/evento.model';
 @Injectable({ providedIn: 'root' })
 export class EventoService {
   private readonly apiUrl = `${environment.apiUrl}/eventos/atual`;
+  private readonly sugestoesPadrao: SugestaoPresente[] = [
+    { id: 1, titulo: 'Roupas', descricao: 'Tamanho 2 anos', icone: '👗' },
+    { id: 2, titulo: 'Sapatos', descricao: 'Tamanho 21/22', icone: '👟' },
+    { id: 3, titulo: 'Brinquedos', descricao: 'Boneca, Educativos', icone: '🧸' },
+  ];
   private readonly eventoPadrao: Evento = {
     id: 0,
     nomeAniversariante: 'Isabella',
@@ -21,7 +26,7 @@ export class EventoService {
   };
 
   evento = signal<Evento>(this.eventoPadrao);
-  sugestoes = signal<SugestaoPresente[]>([]);
+  sugestoes = signal<SugestaoPresente[]>(this.sugestoesPadrao);
 
   constructor(private http: HttpClient) {
     this.carregar();
@@ -42,6 +47,6 @@ export class EventoService {
 
   private definirEvento(evento: Evento): void {
     this.evento.set(evento);
-    this.sugestoes.set(evento.sugestoes ?? []);
+    this.sugestoes.set(evento.sugestoes?.length ? evento.sugestoes : this.sugestoesPadrao);
   }
 }
