@@ -1,14 +1,14 @@
 <main class="login page-shell">
-    <form class="card" (ngSubmit)="entrar()">
+    <form class="card" autocomplete="off" (ngSubmit)="entrar()">
         <h1 class="script">Admin Isabella</h1>
         <p>Acesse para visualizar as confirmações de presença.</p>
         <div class="field">
             <label>E-mail</label>
-            <input name="email" [(ngModel)]="email">
+            <input name="email" type="email" autocomplete="off" [(ngModel)]="email">
         </div>
         <div class="field">
             <label class="label-password">Senha</label>
-            <input name="senha" type="password" [(ngModel)]="senha">
+            <input name="senha" type="password" autocomplete="new-password" [(ngModel)]="senha">
         </div>
         <p class="erro">{{erro}}</p>
         <button class="btn btn-primary">Entrar</button>
